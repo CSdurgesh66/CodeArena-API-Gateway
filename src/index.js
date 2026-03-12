@@ -1,11 +1,12 @@
 const express = require('express')
 const app = express()
-const { PORT, SERVICES } = require('./config/server.config');
+const { PORT } = require('./config/server.config');
 const { default: helmet } = require('helmet');
 const proxyRoutes = require('./routes/proxyRoutes');
 const logger = require('./config/logger');
 const cors = require('cors');
 const healthRoute = require('./routes/healthRoute');
+const aiRoute = require('./routes/aiRoute');
 
 
 app.use(helmet());
@@ -17,8 +18,9 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/', healthRoute);
+app.use('/api/ai', aiRoute);
 app.use('/api', proxyRoutes);
+app.use('/', healthRoute);
 
 
 
